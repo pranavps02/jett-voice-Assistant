@@ -1,7 +1,7 @@
-import pyttsx3 #pip install pyttsx3
-import speech_recognition as sr #pip install speechRecognition
+import pyttsx3
+import speech_recognition as sr
 import datetime
-import wikipedia #pip install wikipedia
+import wikipedia
 import webbrowser
 import os
 import smtplib
@@ -21,15 +21,15 @@ def speak(audio):
 def wishMe():
     hour = int(datetime.datetime.now().hour)
     if hour>=0 and hour<12:
-        speak("Good Morning!")
+        speak("Good Morning! Sir")
 
     elif hour>=12 and hour<18:
-        speak("Good Afternoon!")
+        speak("Good Afternoon! Sir")
 
     else:
-        speak("Good Evening!")
+        speak("Good Evening! Sir")
 
-    speak("I am Your Personal Assistant. Please tell me how may I help you")
+    speak("My name is JETT and I am Your Personal Voice Assistant. Please tell me how may I help you")
 
 def takeCommand():
     #It takes microphone input from the user and returns string output
@@ -51,13 +51,7 @@ def takeCommand():
         return "None"
     return query
 
-def sendEmail(to, content):
-    server = smtplib.SMTP('smtp.gmail.com', 587)
-    server.ehlo()
-    server.starttls()
-    server.login('youremail@gmail.com', 'your-password')
-    server.sendmail('youremail@gmail.com', to, content)
-    server.close()
+
 
 if __name__ == "__main__":
     wishMe()
@@ -65,7 +59,15 @@ if __name__ == "__main__":
         query = takeCommand().lower()
 
         # Logic for executing tasks based on query
-        if 'wikipedia' in query:
+        if 'how are you' in query:
+            speak('I am Fine! how are you !. Tell Me how may I help You Sir !')
+
+        elif 'about yourself' in query:
+            speak('Hi ! i am JETT , your personal assistant. my version is 1.o . I can do several things for you ,such as '
+                  'getting information from wikipedia,opening websites,playing music for you ,telling current weather conditions ,'
+                  'searching places nearby you and many more ! Thank You ')
+
+        elif 'wikipedia' in query:
             speak('Searching Wikipedia...')
             query = query.replace("wikipedia", "")
             results = wikipedia.summary(query, sentences=2)
@@ -83,19 +85,36 @@ if __name__ == "__main__":
             webbrowser.open("stackoverflow.com")
 
 
-        # elif 'play music' in query:
-        #     music_dir = 'D:\\Non Critical\\songs\\Favorite Songs2'
-        #     songs = os.listdir(music_dir)
-        #     print(songs)
-        #     os.startfile(os.path.join(music_dir, songs[0]))
+        elif 'play music' in query:
+            speak("Tell me Which Song You Want to listen ! ")
+            song = takeCommand().lower()
+            if song != 'none':
+                print(f"Now Playing.....\n {song}")
+                webbrowser.open(f"https://gaana.com/song/{song}")
+
+
+            # music_dir = "E:\\Music"
+            # songs = os.listdir(music_dir)
+            # print(songs)
+            # os.startfile(os.path.join(music_dir, songs[0]))
+
 
         elif 'the time' in query:
             strTime = datetime.datetime.now().strftime("%H:%M:%S")
             speak(f"Sir, the time is {strTime}")
 
-        elif 'open code' in query:
-            codePath = "C:\\Users\\Haris\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe"
-            os.startfile(codePath)
+        elif 'open brave ' in query:
+            brave = "C:\\ProgramData\\Microsoft\\Windows\Start Menu\\Programs\\Brave.lnk"
+            os.startfile(brave)
+
+        elif 'weather' in query:
+            webbrowser.open("current weather")
+
+        elif 'near me' in query:
+            webbrowser.open(query)
+
+        elif 'news' in query:
+            webbrowser.open(query)
 
 
         elif 'stop' in query:
